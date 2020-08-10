@@ -8,7 +8,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 
-import {auth } from './firebase/firebase.utils';  //to store state of user on app state
+import {auth ,createUserProfileDocument} from './firebase/firebase.utils';  //to store state of user on app state
 
 class App extends React.Component {
   constructor(){
@@ -21,9 +21,30 @@ class App extends React.Component {
   unsubscribeFromAuth = null
 
   componentDidMount(){
-    this.unsubscribeFromAuth =auth.onAuthStateChanged(user =>{                          //from auth library of firebase user parameter is user state of logged in user
-      this.setState({currentUser:user});
+    this.unsubscribeFromAuth =auth.onAuthStateChanged(async userAuth =>{                          //from auth library of firebase user parameter is user state of logged in user
+
+      if(userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+
+        // data of snapshot is in snapshot.data()
+
+        userRef.onSnapshot(snapShot=>{
+          this.setState({
+            currentUser:{
+              id:snapShot.id,
+              ...snapShot.data()
+            }
+          })
+        });
+      }
+      else{
+        this.setState({currentUser:userAuth});
+      }
+
+      //createUserProfileDocument(user);
+      //this.setState({currentUser:user});
       // console.log(user);                                   //using firebse no requirement of oAuth from google console
+
     })
   }
   
