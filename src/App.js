@@ -8,17 +8,42 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 
-function App() {
-  return (
-    <div>
-      <Header />
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route path='/shop' component={ShopPage} />
-        <Route path='/signin' component={SignInAndSignUpPage} />
-      </Switch>
-    </div>
-  );
+import {auth } from './firebase/firebase.utils';  //to store state of user on app state
+
+class App extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      currentUser:null
+    }
+  }
+
+  unsubscribeFromAuth = null
+
+  componentDidMount(){
+    this.unsubscribeFromAuth =auth.onAuthStateChanged(user =>{                          //from auth library of firebase user parameter is user state of logged in user
+      this.setState({currentUser:user});
+      // console.log(user);                                   //using firebse no requirement of oAuth from google console
+    })
+  }
+  
+
+  componentWillUnmount(){
+    this.unsubscribeFromAuth();      //to close subscription when we want to unmount
+  }
+   
+  render(){
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser}/>
+        <Switch>
+          <Route exact path='/' component={HomePage} />
+          <Route path='/shop' component={ShopPage} />
+          <Route path='/signin' component={SignInAndSignUpPage} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;
