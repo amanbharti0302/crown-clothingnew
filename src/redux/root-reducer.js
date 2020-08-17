@@ -3,9 +3,12 @@
 
 import {combineReducers} from 'redux';
 import userReducer from './user/user.reducer';
+import cartReducer from './cart/cart.reducer';
+
 
 
 // remeber all state in reducers in a whole json state
 export default combineReducers({
-    user:userReducer
+    user:userReducer,
+    cart:cartReducer
 })
