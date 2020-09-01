@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route,Redirect } from 'react-router-dom';
 
 import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
 
 import './App.css';
 
@@ -9,11 +10,13 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 import {auth ,createUserProfileDocument} from './firebase/firebase.utils';  //to store state of user on app state
 
 
 import {setCurrentUser} from './redux/user/user.action';   //import action for dispatch to props to set state
+import { selectCurrrentUser } from './redux/user/user.selectors';
 
 
 class App extends React.Component {
@@ -58,6 +61,7 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
+          <Route exact path='/checkout' component={CheckoutPage}/>
           <Route path='/shop' component={ShopPage} />
           <Route exact path='/signin' render={()=>this.props.currentUser?(<Redirect to='/' />):(<SignInAndSignUpPage/>)} />
         </Switch>
@@ -67,8 +71,14 @@ class App extends React.Component {
 }
 
 
-const mapStateToProps = ({user})=>({               // we use this function here to get current user state so that we can redirect from login page to home if it is already logged in
-    currentUser:user.currentUser
+// const mapStateToProps = ({user})=>({               // we use this function here to get current user state so that we can redirect from login page to home if it is already logged in
+//     currentUser:user.currentUser
+// })
+
+
+//using createStructuredSelector
+const mapStateToProps = createStructuredSelector({
+  currentUser:selectCurrrentUser
 })
 
 const mapDispatchToProps = dispatch => ({
