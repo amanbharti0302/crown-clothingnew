@@ -47,7 +47,7 @@ class App extends React.Component {
       //this.setState({currentUser:user});
       // console.log(user);                                   //using firebse no requirement of oAuth from google console
 
-    })
+    }) 
   }
   
 
