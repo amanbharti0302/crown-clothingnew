@@ -41,9 +41,8 @@ const CheckoutPage = ({CartItems,total}) =>{
         {
         `4242 4242 4242 4242 4242 - EXP: ${dt.getMonth()+1}/${dt.getFullYear()} - CVV : 123`}
         <br/>
-        actually exp date is future date so above date will automatically update next month by using jabascript
+        actually exp date is future date so above date will automatically update next month by using javascript
         </div>
-        
         <StripeCheckoutButton price={total}/>
     </div>
 )}
