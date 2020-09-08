@@ -5,8 +5,11 @@ import logger from 'redux-logger';     //to monitor redux state
 
 import rootreducer from './root-reducer';
 
-const middlewares = [logger];     //here we stored logger in array ths method is used when we have to use more than one middleware
+const middlewares = [];     //here we stored logger in array ths method is used when we have to use more than one middleware
 
+if(process.env.NODE_ENV==='development'){
+    middlewares.push(logger);
+}
 
 //in applyMiddleware we can send directly logger here as we have only one middleware
 //...middleware is used to destructure all middlewares
