@@ -10,11 +10,12 @@ You can see the fork button in the top right corner of every GitHub project; cli
 
 After forking the project, simply clone it the way you would from the new forked project in your own GitHub repository and you can commit and push to it freely!
 
-# npm  Node Package Manager 
+# npm : Node Package Manager 
 I always prefer to use npm rather than using yarn as nowadays npm is more advanced than yarn and it is pretty easier to use and setting configuration files.
 
 In your terminal after you clone your project down, remember to run either `yarn` or `npm install` to build all the dependencies in the project.
 
+# How to run:
 To run react Project on your local server use `npm start`
 
 # Aman Bharti
